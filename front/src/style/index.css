@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  background-color: blue;
+}
+
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 20px;
+  width: 200px;
+  background-color: red;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 20px;
+  width: 100%;
+  background-color: green;
+}
+
+.content {
+  position: fixed;
+  top: 50px;
+  left: 200px;
+  bottom: 20px;
+  right: 0;
+  padding: 10px;
+  margin: 0;
+}
+.content .calendar {
+  height: 100%;
+}
+
+.resa-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.resa-form input {
+  font-size: 25px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1px 11px;
+  padding: 5px;
+  text-align: center;
+}
+.resa-form input:hover {
+  background-color: rgba(100, 100, 220, 0.9);
+  color: white;
+}
+.resa-dates {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+.resa-title, .resa-start, .resa-end, .resa-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  border: 1px dotted blue;
+  border-radius: 3px 15px;
+  margin: 5px;
+  padding: 5px;
+  flex: 1 1 0;
+  background-color: rgba(200, 200, 255, 0.3);
+}
+.resa-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.resa-buttons button {
+  font-size: 25px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 1px 11px;
+  padding: 5px;
+  margin: 5px;
+}
+.resa-buttons button:hover {
+  background-color: rgba(100, 100, 220, 0.9);
+  color: white;
+}
+.rdt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
