@@ -9,6 +9,7 @@ function stateToProps(state, ownProps) {
   return {
     reservations: state.reservations,
     display: state.display,
+    user: state.user,
     ...ownProps
   };
 }
@@ -19,7 +20,7 @@ function dispatchToProps(dispatch, ownProps) {
     onDataRequest: () => dispatch(fetchReservations()),
     onDetailDisplay: (resa) => dispatch(displayReservation(resa)),
     onDetailReset: () => dispatch(resetDisplay()),
-    onNewReservation: (title, start, end) => dispatch(newReservation(title, start, end))
+    onNewReservation: (title, start, end, owner) => dispatch(newReservation(title, start, end, owner))
   };
 }
 

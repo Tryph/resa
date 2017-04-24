@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
+from authentication.serializers import UserSerializer
+
 from .models import Reservation
-from .serializers import ReservationSerializer, UserSerializer
+from .serializers import ReservationSerializer
 
 
 class ReservationViewSet(ModelViewSet):

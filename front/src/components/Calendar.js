@@ -41,8 +41,11 @@ class Calendar extends Component {
   }
 
   handleResaSubmission(title, start, end) {
-    console.log("Reservation submitted", title, start, end);
-    this.props.onNewReservation(title, start, end);
+    if (this.props.user) {
+      this.props.onNewReservation(title, start, end, this.props.user.url);
+    } else {
+      alert("Vous devez être identifié pour réserver la salle de réunion");
+    }
   }
 
   render() {
@@ -78,6 +81,9 @@ class Calendar extends Component {
 
 
 Calendar.propTypes = {
+  reservations: React.PropTypes.arrayOf(React.PropTypes.object),
+  display: React.PropTypes.object,
+  user: React.PropTypes.object,
   onDataRequest: React.PropTypes.func.isRequired,
   onDetailDisplay: React.PropTypes.func.isRequired,
   onDetailReset: React.PropTypes.func.isRequired,

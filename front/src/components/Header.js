@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 
+import AuthenticationContainer from '../containers/AuthenticationContainer';
+
 
 class Header extends Component {
   render() {
     return(
-      <div className="header"/>
+      <div className="header">
+        <AuthenticationContainer/>
+      </div>
     );
   }
 }
