@@ -14,6 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_PATH = os.path.dirname(BASE_DIR)
+WWW_PATH = os.path.join(ROOT_PATH, 'www')
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'api',
+    'reservation',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,8 @@ ROOT_URLCONF = 'meeting_room_reservation.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'back/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # 'DIRS': [os.path.join(BASE_DIR, 'back/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,6 +125,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_ROOT = os.path.join(WWW_PATH, 'static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    # all static files are managed by grunt,
+    # and live in 'public' and 'build' dirs
+    os.path.join(ROOT_PATH, 'front', 'public'),
+    os.path.join(ROOT_PATH, 'front', 'dist'),
+)
 
 CORS_ORIGIN_ALLOW_ALL = True

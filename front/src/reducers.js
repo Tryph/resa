@@ -1,5 +1,6 @@
 import { FETCH_RESERVATIONS_SUCCESS, DISPLAY_NEW_RESERVATION,
-         NEW_RESERVATION_SUCCESS, RESET_DISPLAY } from './actions';
+         NEW_RESERVATION_SUCCESS, RESET_DISPLAY,
+         LOGIN_SUCCESS } from './actions';
 
 export default function(state={reservations: []}, action) {
   switch(action.type) {
@@ -33,6 +34,9 @@ export default function(state={reservations: []}, action) {
       return Object.assign({}, state, {
         display: null
       });
+
+    case LOGIN_SUCCESS:
+      return Object.assign({}, state, {user: action.user});
 
     default:
       return state;

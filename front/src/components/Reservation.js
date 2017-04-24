@@ -43,7 +43,8 @@ class Reservation extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.title, this.state.start, this.state.end);
+    this.props.onSubmit(this.state.title, this.state.start, this.state.end,
+                        this.props.data.owner);
   }
 
   handleCancel(event) {

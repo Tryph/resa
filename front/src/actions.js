@@ -9,6 +9,13 @@ export const NEW_RESERVATION_FAILURE = "NEW_RESERVATION_FAILURE";
 export const DISPLAY_NEW_RESERVATION = "DISPLAY_NEW_RESERVATION";
 export const RESET_DISPLAY = "RESET_DISPLAY";
 
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+
+
+export const API_ROOT = 'http://127.0.0.1:8000/api/';
+
 
 function requestReservations() {
   return {
@@ -34,7 +41,7 @@ export function fetchReservations() {
   return function(dispatch) {
     dispatch(requestReservations());
     return (
-      fetch('http://127.0.0.1:8000/api/resas/')
+      fetch(`${API_ROOT}resa/resas/`)
       .then(response => response.json())
       .then(json => dispatch(successReservations(json)))
       .catch(error => dispatch(failureReservations(error)))
@@ -48,7 +55,7 @@ function requestNewReservation(title, start, end) {
     type: NEW_RESERVATION_REQUEST,
     title: title,
     start: start,
-    end: end,
+    end: end
   }
 }
 
@@ -66,16 +73,16 @@ function failureNewReservation(error) {
   }
 }
 
-export function newReservation(title, start, end) {
+export function newReservation(title, start, end, owner) {
   return function(dispatch) {
-    dispatch(requestNewReservation(title, start, end));
+    dispatch(requestNewReservation(title, start, end, owner));
     const data = new FormData();
     data.append('title', title);
     data.append('start', start.toISOString());
     data.append('end', end.toISOString());
-    data.append('owner', 'http://127.0.0.1:8000/api/users/1/');
+    data.append('owner', owner);
     return (
-      fetch('http://127.0.0.1:8000/api/resas/', {
+      fetch(`${API_ROOT}resa/resas/`, {
         method: 'post',
         body: data
       })
@@ -104,5 +111,48 @@ export function resetDisplay(reservation) {
     dispatch({
       type: RESET_DISPLAY
     });
+  }
+}
+
+
+function requestLogin(username, password) {
+  return {
+    type: LOGIN_REQUEST,
+    username: username,
+    password: password
+  }
+}
+
+function successLogin(json) {
+  return {
+    type: LOGIN_SUCCESS,
+    user: json
+  }
+}
+
+function failureLogin(error) {
+  return {
+    type: LOGIN_FAILURE,
+    error: error
+  }
+}
+
+export function login(username, password) {
+  return function(dispatch) {
+    dispatch(requestLogin(username, password));
+    const data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+    return (
+      fetch(`${API_ROOT}auth/login/`, {
+        method: 'post',
+        body: data
+      })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(successLogin(json));
+      })
+      .catch(error => dispatch(failureLogin(error)))
+    );
   }
 }
