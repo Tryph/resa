@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { login } from '../actions';
+import { getProfile, login } from '../actions';
 import Authentication from '../components/Authentication'
 
 
@@ -16,6 +16,7 @@ function dispatchToProps(dispatch, ownProps) {
   return {
     onLogin: (username, password) => dispatch(login(username, password)),
     onLogout: () => console.log("LOGOUT NOT IMPLEMENTED!"),
+    onProfile: () => dispatch(getProfile())
   }
 }
 

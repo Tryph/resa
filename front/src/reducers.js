@@ -1,5 +1,5 @@
 import { FETCH_RESERVATIONS_SUCCESS, DISPLAY_NEW_RESERVATION,
-         NEW_RESERVATION_SUCCESS, RESET_DISPLAY,
+         GET_PROFILE_SUCCESS, NEW_RESERVATION_SUCCESS, RESET_DISPLAY,
          LOGIN_SUCCESS } from './actions';
 
 export default function(state={reservations: []}, action) {
@@ -36,6 +36,9 @@ export default function(state={reservations: []}, action) {
       });
 
     case LOGIN_SUCCESS:
+      return Object.assign({}, state, {user: action.user});
+
+    case GET_PROFILE_SUCCESS:
       return Object.assign({}, state, {user: action.user});
 
     default:

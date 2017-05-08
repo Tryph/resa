@@ -25,3 +25,11 @@ class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ProfileView(APIView):
+
+    def get(self, request):
+        user_serializer = UserSerializer(instance=request.user,
+                                         context={'request': request})
+        return Response(data=user_serializer.data)

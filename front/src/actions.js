@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import { getCookie } from './common/cookie';
+
 export const FETCH_RESERVATIONS_REQUEST = "FETCH_RESERVATIONS_REQUEST";
 export const FETCH_RESERVATIONS_SUCCESS = "FETCH_RESERVATIONS_SUCCESS";
 export const FETCH_RESERVATIONS_FAILURE = "FETCH_RESERVATIONS_FAILURE";
@@ -12,9 +14,20 @@ export const RESET_DISPLAY = "RESET_DISPLAY";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const GET_PROFILE_REQUEST = "GET_PROFILE_REQUEST";
+export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
+export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 
 
-export const API_ROOT = 'http://127.0.0.1:8000/api/';
+export const API_ROOT = '/api/';
+// export const API_ROOT = 'http://127.0.0.1:8000/api/';
+
+
+function getHeadersObj() {
+  const headers = new Headers();
+  headers.append('X-CSRFToken', getCookie('csrftoken'));
+  return headers
+}
 
 
 function requestReservations() {
@@ -41,7 +54,10 @@ export function fetchReservations() {
   return function(dispatch) {
     dispatch(requestReservations());
     return (
-      fetch(`${API_ROOT}resa/resas/`)
+      fetch(`${API_ROOT}resa/resas/`, {
+        headers: getHeadersObj(),
+        credentials: 'same-origin'}
+      )
       .then(response => response.json())
       .then(json => dispatch(successReservations(json)))
       .catch(error => dispatch(failureReservations(error)))
@@ -83,8 +99,10 @@ export function newReservation(title, start, end, owner) {
     data.append('owner', owner);
     return (
       fetch(`${API_ROOT}resa/resas/`, {
+        headers: getHeadersObj(),
         method: 'post',
-        body: data
+        body: data,
+        credentials: 'same-origin'
       })
       .then(response => response.json())
       .then(json => {
@@ -145,14 +163,55 @@ export function login(username, password) {
     data.append('password', password);
     return (
       fetch(`${API_ROOT}auth/login/`, {
+        headers: getHeadersObj(),
         method: 'post',
-        body: data
+        body: data,
+        credentials: 'same-origin'
       })
       .then(response => response.json())
       .then(json => {
         dispatch(successLogin(json));
       })
       .catch(error => dispatch(failureLogin(error)))
+    );
+  }
+}
+
+
+function requestProfile() {
+  return {
+    type: GET_PROFILE_REQUEST
+  }
+}
+
+function successProfile(json) {
+  return {
+    type: GET_PROFILE_SUCCESS,
+    user: json
+  }
+}
+
+function failureProfile(error) {
+  return {
+    type: GET_PROFILE_FAILURE,
+    error: error
+  }
+}
+
+export function getProfile() {
+  return function(dispatch) {
+    dispatch(requestProfile());
+    return (
+      fetch(`${API_ROOT}auth/profile/`, {
+        headers: getHeadersObj(),
+        method: 'get',
+        credentials: 'same-origin'
+      })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(successProfile(json));
+      })
+      .catch(error => dispatch(failureProfile(error)))
     );
   }
 }

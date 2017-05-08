@@ -7,6 +7,7 @@ class Header extends Component {
   render() {
     return(
       <div className="header">
+        <h1>Résa</h1>
         <AuthenticationContainer/>
       </div>
     );

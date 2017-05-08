@@ -12,6 +12,10 @@ class Authentication extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
+  componentWillMount() {
+    this.props.onProfile();
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     console.log('username:', this.state.username, 'password:', this.state.password);
@@ -58,7 +62,8 @@ class Authentication extends Component {
 Authentication.propTypes = {
   username: React.PropTypes.object,
   onLogin: React.PropTypes.func,
-  onLogout: React.PropTypes.func
+  onLogout: React.PropTypes.func,
+  onProfile: React.PropTypes.func
 };
 
 
