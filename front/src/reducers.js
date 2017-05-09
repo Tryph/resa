@@ -1,6 +1,9 @@
 import { FETCH_RESERVATIONS_SUCCESS, DISPLAY_NEW_RESERVATION,
+         DISPLAY_RESERVATION,
          GET_PROFILE_SUCCESS, NEW_RESERVATION_SUCCESS, RESET_DISPLAY,
-         LOGIN_SUCCESS } from './actions';
+         LOGIN_SUCCESS, LOGOUT_SUCCESS, UPDATE_RESERVATION_SUCCESS,
+         REMOVE_RESERVATION_SUCCESS
+       } from './actions';
 
 export default function(state={reservations: []}, action) {
   switch(action.type) {
@@ -15,6 +18,7 @@ export default function(state={reservations: []}, action) {
     case NEW_RESERVATION_SUCCESS:
       return Object.assign({}, state, {
         reservations: [...state.reservations, {
+          id: action.reservation.id,
           title: action.reservation.title,
           start: new Date(action.reservation.start),
           end: new Date(action.reservation.end),
@@ -22,10 +26,38 @@ export default function(state={reservations: []}, action) {
         }]
       });
 
+    case UPDATE_RESERVATION_SUCCESS:
+      return Object.assign({}, state, {
+        reservations: [
+          ...state.reservations.filter(
+            resa => resa.id !== action.reservation.id),
+          {
+            id: action.reservation.id,
+            title: action.reservation.title,
+            start: new Date(action.reservation.start),
+            end: new Date(action.reservation.end),
+            owner: action.reservation.owner
+          }
+        ]
+      });
+
+    case REMOVE_RESERVATION_SUCCESS:
+      return Object.assign({}, state, {
+        reservations: [...state.reservations.filter(
+          resa => resa.id !== action.reservation.id)]});
+
     case DISPLAY_NEW_RESERVATION:
       return Object.assign({}, state, {
         display: {
           action: "new",
+          reservation: action.reservation
+        }
+      });
+
+    case DISPLAY_RESERVATION:
+      return Object.assign({}, state, {
+        display: {
+          action: "update",
           reservation: action.reservation
         }
       });
@@ -37,6 +69,9 @@ export default function(state={reservations: []}, action) {
 
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {user: action.user});
+
+    case LOGOUT_SUCCESS:
+      return Object.assign({}, state, {user: null});
 
     case GET_PROFILE_SUCCESS:
       return Object.assign({}, state, {user: action.user});

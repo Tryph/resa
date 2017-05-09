@@ -7,7 +7,8 @@ class Authentication extends Component {
 
     this.state = {username: '', password: ''};
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
@@ -16,10 +17,16 @@ class Authentication extends Component {
     this.props.onProfile();
   }
 
-  handleSubmit(event) {
+  handleLogin(event) {
     event.preventDefault();
-    console.log('username:', this.state.username, 'password:', this.state.password);
     this.props.onLogin(this.state.username, this.state.password);
+    this.setState({username: '', password: ''});
+    return false;
+  }
+
+  handleLogout(event) {
+    event.preventDefault();
+    this.props.onLogout();
     return false;
   }
 
@@ -35,10 +42,10 @@ class Authentication extends Component {
     let content;
     let username = this.props.username;
     if (username) {
-      content = <p>{username}</p>
+      content = <p>{username} | <a onClick={this.handleLogout}>Déconnexion</a></p>
     } else {
       content = (
-        <form className="login-form" onSubmit={this.handleSubmit}>
+        <form className="login-form" onSubmit={this.handleLogin}>
           <input type="text" name="username" className="username"
                  value={this.state.username}
                  onChange={this.handleUsernameChange}/>

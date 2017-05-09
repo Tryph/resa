@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { displayReservation, fetchReservations, newReservation,
+import { displayNewReservation, displayReservation, fetchReservations, newReservation,
          resetDisplay } from '../actions';
 import Calendar from '../components/Calendar';
 
@@ -18,9 +18,11 @@ function dispatchToProps(dispatch, ownProps) {
   // console.log(dispatch, ownProps);
   return {
     onDataRequest: () => dispatch(fetchReservations()),
-    onDetailDisplay: (resa) => dispatch(displayReservation(resa)),
+    onNewDetailDisplay: (resa) => dispatch(displayNewReservation(resa)),
+    onUpdateDetailDisplay: (resa) => dispatch(displayReservation(resa)),
     onDetailReset: () => dispatch(resetDisplay()),
-    onNewReservation: (title, start, end, owner) => dispatch(newReservation(title, start, end, owner))
+    onNewReservation: (title, start, end, owner) => dispatch(newReservation(title, start, end, owner)),
+    onUpdateReservation: (id, title, start, end, owner) => dispatch(newReservation(id, title, start, end, owner))
   };
 }
 
