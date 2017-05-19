@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git changelog: false, credentialsId: 'd0e1a2da-b47b-48e0-a930-6cf2c6555503', poll: false, url: 'https://github.com/Tryph/resa.git'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'success'
+        }
+        failure {
+            echo 'failure'
+        }
+    }
+}
