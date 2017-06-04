@@ -129,8 +129,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(WWW_PATH, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    # all static files are managed by grunt,
-    # and live in 'public' and 'build' dirs
     os.path.join(ROOT_PATH, 'front', 'public'),
     os.path.join(ROOT_PATH, 'front', 'dist'),
 )
